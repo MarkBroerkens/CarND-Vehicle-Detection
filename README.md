@@ -39,9 +39,9 @@ My project includes the following files:
 [imagenhog4]: ./output_images/non_vehicle_4_orient13_pix_per_cell16_cell_per_block2_RGB2YUV.png
 [imagenhog5]: ./output_images/non_vehicle_5_orient13_pix_per_cell16_cell_per_block2_RGB2YUV.png
 
-[imagewindow1]: ./output_images/window1.png
-[imagewindow2]: ./output_images/window2.png
-[imagewindow3]: ./output_images/window3.png
+[imagewindow1]: ./output_images/windows_1.png
+[imagewindow2]: ./output_images/windows_2.png
+[imagewindow3]: ./output_images/windows_3.png
 
 
 [identified_boxes0]: ./output_images/identified_boxes0.png
