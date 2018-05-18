@@ -42,7 +42,7 @@ class Hotspots:
         
         for bbox_list in self.history:
             heatmap = self.add_heat(heatmap_img, bbox_list)
-            heatmap = self.apply_threshold(heatmap, self.history_max_size / 3)
+        heatmap = self.apply_threshold(heatmap, self.history_max_size * 1.5)
         labels = label(heatmap)
         draw_img = self.draw_labeled_bboxes(img, labels)
         #draw_img = self.draw_heatmap(heatmap)
@@ -57,7 +57,6 @@ class Hotspots:
         img  = img.reshape(fig.canvas.get_width_height()[::-1] + (3,))
         plt.close(fig)
         return  img
-    
 
     def draw_labeled_bboxes(self, img, labels):
         # Iterate through all detected cars

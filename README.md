@@ -13,7 +13,18 @@ The goals / steps of this project are the following:
 
 # Overview of Files
 My project includes the following files:
-* [README.md](https://github.com/MarkBroerkens/CarND-Advanced-Lane-Lines/blob/master/README.md) (writeup report) documentation of the results 
+* [README.md](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/README.md) (writeup report) documentation of the results
+* [L_project_video.mp4](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/output_images/L_project_video.mp4) the movie that shows the detected vehicles
+* [hotspots.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/hotspots.py) implementation of heatmap 
+* [train.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/train.py) code for training the classifier
+* [train_pickle.p](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/train_pickle.p) saved classifier including the parmeters that have been used for training and feature extraction
+* [videoprocess.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/videoprocess.py) processes the video
+* [search_and_classify.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/search_and_classify.py) detection of vehicles in images
+* [image_util.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/image_util.py) utility for loading and saving of images
+* [lesson_functions.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/lesson_functions.py) some functions from the lesson
+* [car_finder_pipeline.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/car_finder_pipeline.py) the pipeline that for vehicle detection
+
+
 
 [//]: # (Image References)
 [image1]: ./output_images/vehicle_non_vehicle.png
@@ -28,25 +39,23 @@ My project includes the following files:
 
 
 
-# Histogram of Oriented Gradients (HOG)
+# Feature Extraction and Training of Classfier
 
 ## Feature extraction from the training images
 
-The code for this step is contained in the file called `hog.py`.
-
-I started by reading in all the `vehicle` and `non-vehicle` images.  Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
+The code for training the classifier is defined in function `train()` in file [train.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/train.py). This function is invoked with a list of files names of `vehicle` and `non-vehicle` images and several parameters that configure the feature extraction algorithms.
+Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
 
 ![alt text][image1]
 
-I then explored different color spaces and different `skimage.hog()` parameters (`orientations`, `pixels_per_cell`, and `cells_per_block`).  I grabbed random images from each of the two classes and displayed them to get a feel for what the `skimage.hog()` output looks like.
+In order to identify if the images shows a vehicle the following feature extraction techniques are used:
+* Histogram of 
+* 
+* Histogram of oriented gradients
 
-Here is an example using the `YCrCb` color space and HOG parameters of `orientations=8`, `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)`:
 
 
-![alt text][image2]
-![alt text][image2a]
-
-## Histogram parameters
+## Histograms of Color
 The combinations of parameters and its impact on the test accuracy is claculated in test `test_01_train_histogram()` of `test_train.py` 
 
 | Number of features | Color space | Numer of bins | Test Accuracy |
@@ -81,7 +90,7 @@ The following parameters resulted in the best test accuracy: color space HLS or 
 The test was executed twice in order to validate the results.
 
 
-## Spatial parameters
+## Spatial Binning
 | Number of features | Color space | Spartial Size | Test Accuracy |
 | -----------------------|---------------|------------------|------------------|
 |192 | RGB | 8 | 0.902 |
@@ -112,7 +121,17 @@ The test was executed twice in order to validate the results.
 The best results are marked in the table.
 
 
-## HOG parameters.
+## Gradient Features
+Histograms of Ordered Gradients (HOG) were calculated in order to extract features with respect of the shape of the vehicle.
+
+
+I explored different color spaces and different `skimage.hog()` parameters (`orientations`, `pixels_per_cell`, and `cells_per_block`).  
+Here are example using the `YCrCb` color space and HOG parameters of `orientations=8`, `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)`:
+
+![alt text][image2]
+![alt text][image2a]
+
+I trained a linear `Support Vector Machine` classifier with different `skimage.hog()` parameters in order to figure out which parameters work best on the given training data. The following table is calculated in `test_03_train_hog()` of [test_train.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/tests/test_train.py)
 
 | len features | color_space | orient | pix_per_cell | cell_per_block | hog_channel | accuracy | 
 | 2940 | HSV | 5 | 8 | 2 | ALL | 0.962 |
@@ -178,22 +197,21 @@ The best results are marked in the table.
 
 The best results are marked in the table.
 
-## Parameters
-color space YCrCb, number of orientations=5, pix per cell 16, cells per block 4, and hog channels = "All", 
+## Combination of Feature Extraction
+color space YUV number of orientations=13, pix per cell 16, cells per block 2, and hog channels = "All", 
 spartial size of 16, 64 bins.
 
 | len features | spatial_feat | hist_feat | hog_feat | accuracy |
 |---------------|--------------|------------|-----------|------------|
-| 1056 | True | True | True | 0.986 |
-| 816 | True | True | False | 0.950 |
-| 1008 | True | False | True | 0.975 |
-| 768 | True | False | False | 0.926 |
-| 288 | False | True | True | 0.985 |
-| 48 | False | True | False | 0.884 |
-| 240 | False | False | True | 0.980 |
+| 2364 | True | True | True | **0.991** |
+| 960 | True | True | False | 0.961 |
+| 2172 | True | False | True | 0.986 |
+| 768 | True | False | False | 0.924 |
+| 1596 | False | True | True | 0.990 |
+| 192 | False | True | False | 0.933 |
+| 1404 | False | False | True | 0.983 |
 
-The following parameters resulted in the best test accuracy (98,6%): 
-no spartial, enabled hist and hog features.
+The best results are marked in the table.
 
 #### 3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
 
@@ -222,8 +240,7 @@ Ultimately I searched on two scales using YCrCb 3-channel HOG features plus spat
 
 # Video Implementation
 
-#### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (somewhat wobbly or unstable bounding boxes are ok as long as you are identifying the vehicles most of the time with minimal false positives.)
-Here's a [link to my video result](./project_video.mp4)
+Here's a [link to my video result](./output_images/L_project_video.mp4)
 
 
 #### 2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
@@ -253,7 +270,7 @@ The results of the vehicle detections imporoved significantly by improving the f
 * improve accuracy of classifier
 * eleminiation of false positives by considering the hotspots of the last frames
 
-Since the classifier was trained on a quite small training set, the classifier might not work as well as in the provided data. E.g. I applied the vehicle detection algorithm on the challening video of the last project and found out that it did not work so well.
+Since the classifier was trained on a quite small training set, the classifier might not work as well as in the provided data. If no additional "real" data is available, then augmentation techniques could be used to increase the size of training data. 
 
 For improved classification results we might be able to find a better feature extraction mechanism or we could use a CNN such as [YOLO](https://pjreddie.com/darknet/yolo/) ("You only look once")
 

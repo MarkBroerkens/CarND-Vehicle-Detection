@@ -53,17 +53,17 @@ class ImageUtilTest(unittest.TestCase):
                             clf,X_scaler,accu,len = uut.train(self.vehicles, self.non_vehicles,color_space=color_space, orient=orient, pix_per_cell=pix_per_cell, cell_per_block=cell_per_block, hog_channel=hog_channel, spatial_feat=False, hist_feat=False, hog_feat=True)
                             print("| %d | %s | %d | %d | %d | %s | %0.3f |" % (len, color_space, orient, pix_per_cell, cell_per_block, hog_channel ,accu))
 
-    def _test_04_train_complete(self):
+    def test_04_train_complete(self):
         
         print ("hog")
         print ("| len features | spatial_feat | hist_feat | hog_feat | accuracy |" )
         for spatial_feat in [True, False]:
             for hist_feat in [True, False]:
                 for hog_feat in [True, False]:
-                    clf,X_scaler,accu,len = uut.train(self.vehicles, self.non_vehicles,color_space='YCrCb', hist_bins=16, spatial_size=16, orient=5, pix_per_cell=16, cell_per_block=4, hog_channel='ALL', spatial_feat=spatial_feat, hist_feat=hist_feat, hog_feat=hog_feat)
+                    clf,X_scaler,accu,len = uut.train(self.vehicles, self.non_vehicles,color_space='YUV', hist_bins=64, spatial_size=16, orient=13, pix_per_cell=16, cell_per_block=2, hog_channel='ALL', spatial_feat=spatial_feat, hist_feat=hist_feat, hog_feat=hog_feat)
                     print("| %d | %s | %s | %s | %0.3f |" % (len, spatial_feat, hist_feat, hog_feat,accu))
 
-    def test_05_train_and_save(self):
+    def _test_05_train_and_save(self):
         color_space='YUV'
         hist_bins=64
         spatial_size=16

@@ -9,7 +9,8 @@ from scipy.ndimage.measurements import label
 TRAIN_PICKLE_FILE=os.path.dirname(os.path.abspath(__file__))+"/train_pickle.p"
 
 class Pipeline:
-    def __init__(self) :
+    def __init__(self, history_length) :
+        # get trained classifier and the parameters that were used from pickle
         with open(TRAIN_PICKLE_FILE, "rb") as f:
             dist_pickle = pickle.load(f)
         self.color_space    = dist_pickle["color_space"] # Can be RGB, HSV, LUV, HLS, YUV, YCrCb
@@ -26,7 +27,7 @@ class Pipeline:
         self.scaler         = dist_pickle["X_scaler"]
         self.accu           = dist_pickle["accu"]
         self.time           = dist_pickle["time"]
-        self.hotspots       = hotspots.Hotspots(20)
+        self.hotspots       = hotspots.Hotspots(history_length)
 
         print ("Config")
         print ("color_space: " + str(self.color_space ))
@@ -44,74 +45,29 @@ class Pipeline:
 
     def process(self,img) :
 
-
-        # draw all windows into single file
-#        windows = slide_window(img, x_start_stop=[None, None], y_start_stop=self.y_start_stop,
-#                     xy_window=(64, 64), xy_overlap=(0.5, 0.5))
-#
-#        hot_windows = search_windows(img, windows, self.clf, self.scaler, color_space=self.color_space,
-#                                      spatial_size=self.spatial_size, hist_bins=self.hist_bins,
-#                                      orient=self.orient, pix_per_cell=self.pix_per_cell,
-#                                      cell_per_block=self.cell_per_block,
-#                                      hog_channel=self.hog_channel, spatial_feat=self.spatial_feat,
-#                                      hist_feat=self.hist_feat, hog_feat=self.hog_feat)
-#        img = draw_boxes(img, hot_windows, color=(0, 0, 255), thick=6)
-
         boxes = []
         
         # search with box size 64 * 1 = 64
-        ystart = 400
-        ystop = 464
+        ystart = 380
+        ystop = 480
         scale = 1.0
         boxes = boxes + find_cars(img, color_space=self.color_space, ystart=ystart, ystop=ystop, scale=scale, svc = self.clf, X_scaler=self.scaler, orient=self.orient, pix_per_cell=self.pix_per_cell, cell_per_block=self.cell_per_block, spatial_size=self.spatial_size, hist_bins=self.hist_bins)
 
-        ystart = 416
-        ystop = 480
-        scale = 1.0
-        boxes = boxes + find_cars(img, color_space=self.color_space,ystart=ystart, ystop=ystop, scale=scale, svc = self.clf, X_scaler=self.scaler, orient=self.orient, pix_per_cell=self.pix_per_cell, cell_per_block=self.cell_per_block, spatial_size=self.spatial_size, hist_bins=self.hist_bins)
-
         # search with box size 64 * 1.5 = 96
         ystart = 400
-        ystop = 496
+        ystop = 600
         scale = 1.5
         boxes = boxes + find_cars(img, color_space=self.color_space,ystart=ystart, ystop=ystop, scale=scale, svc = self.clf, X_scaler=self.scaler, orient=self.orient, pix_per_cell=self.pix_per_cell, cell_per_block=self.cell_per_block, spatial_size=self.spatial_size, hist_bins=self.hist_bins)
 
-        ystart = 432
-        ystop = 528
-        scale = 1.5
-        boxes = boxes + find_cars(img, color_space=self.color_space,ystart=ystart, ystop=ystop, scale=scale, svc = self.clf, X_scaler=self.scaler, orient=self.orient, pix_per_cell=self.pix_per_cell, cell_per_block=self.cell_per_block, spatial_size=self.spatial_size, hist_bins=self.hist_bins)
 
-        # search with box size 64 * 2 = 128
-        ystart = 400
-        ystop = 528
-        scale = 2.0
-        boxes = boxes + find_cars(img, color_space=self.color_space,ystart=ystart, ystop=ystop, scale=scale, svc = self.clf, X_scaler=self.scaler, orient=self.orient, pix_per_cell=self.pix_per_cell, cell_per_block=self.cell_per_block, spatial_size=self.spatial_size, hist_bins=self.hist_bins)
-
-        ystart = 432
-        ystop = 560
-        scale = 2.0
-        boxes = boxes + find_cars(img, color_space=self.color_space,ystart=ystart, ystop=ystop, scale=scale, svc = self.clf, X_scaler=self.scaler, orient=self.orient, pix_per_cell=self.pix_per_cell, cell_per_block=self.cell_per_block, spatial_size=self.spatial_size, hist_bins=self.hist_bins)
-
-        # search with box size 64 * 3.5 = 196
-        ystart = 400
-        ystop = 596
-        scale = 3.5
-        boxes = boxes + find_cars(img, color_space=self.color_space,ystart=ystart, ystop=ystop, scale=scale, svc = self.clf, X_scaler=self.scaler, orient=self.orient, pix_per_cell=self.pix_per_cell, cell_per_block=self.cell_per_block, spatial_size=self.spatial_size, hist_bins=self.hist_bins)
-
-        ystart = 464
-        ystop = 660
-        scale = 3.5
+        # search with box size 64 * 2.5 = 160
+        ystart = 500
+        ystop = 700
+        scale = 2.5
         boxes = boxes + find_cars(img, color_space=self.color_space,ystart=ystart, ystop=ystop, scale=scale, svc = self.clf, X_scaler=self.scaler, orient=self.orient, pix_per_cell=self.pix_per_cell, cell_per_block=self.cell_per_block, spatial_size=self.spatial_size, hist_bins=self.hist_bins)
 
 
         self.hotspots.add_bboxes(boxes)
-        # Visualize the heatmap when displaying
-        #heatmap = np.clip(heat, 0, 255)
-        
         draw_img = self.hotspots.draw_labeled_bboxes_with_history(img)
-        
-        #img = draw_boxes(img, boxes1, color=(0, 0, 255), thick=6)
-        #img = draw_boxes(img, boxes2, color=(0, 255, 0), thick=6)
-        #img = draw_boxes(img, boxes3, color=(255, 0, 0), thick=6)
         
         return draw_img

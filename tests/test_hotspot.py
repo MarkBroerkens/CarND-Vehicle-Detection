@@ -16,7 +16,7 @@ import image_util
 from lesson_functions import draw_boxes
 
 
-IMG_FILE="../test_images/test_image.jpg"
+IMG_FILE="../test_images"
 TEST_OUT_DIR="hotspot"
 
 class TestPipeline(unittest.TestCase):
