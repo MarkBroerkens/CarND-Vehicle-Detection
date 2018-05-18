@@ -37,27 +37,15 @@ class FeaturesTest(unittest.TestCase):
         features_c1, hog_image_c1 = uut.get_hog_features(ch1, orient=orientations, pix_per_cell=pix_per_cell, cell_per_block=cell_per_block,vis=True, feature_vec=True)
         features_c2, hog_image_c2 = uut.get_hog_features(ch2, orient=orientations, pix_per_cell=pix_per_cell, cell_per_block=cell_per_block,vis=True, feature_vec=True)
         features_c3, hog_image_c3 = uut.get_hog_features(ch3, orient=orientations, pix_per_cell=pix_per_cell, cell_per_block=cell_per_block,vis=True, feature_vec=True)
-        return hog_image_c1, hog_image_c2, hog_image_c3
+        return ch1, ch2, ch3, hog_image_c1, hog_image_c2, hog_image_c3
 
 
-    def visualize_hog(self, index, orientations, pix_per_cell, cell_per_block, color ):
-        vehicle_img = image_util.loadImageRGB(self.vehicles[index])
-        hog_vehicle_image_c1, hog_vehicle_image_c2, hog_vehicle_image_c3 = self.hogChannels(vehicle_img, orientations=orientations, pix_per_cell=pix_per_cell, cell_per_block=cell_per_block, color=color )
+    def visualize_hog(self, img, prefix, orientations, pix_per_cell, cell_per_block, color ):
+        ch1, ch2, ch3, hog_image_c1, hog_image_c2, hog_image_c3 = self.hogChannels(img, orientations=orientations, pix_per_cell=pix_per_cell, cell_per_block=cell_per_block, color=color )
         
-        img = image_util.arrangeImages([vehicle_img, hog_vehicle_image_c1, hog_vehicle_image_c2, hog_vehicle_image_c3], ["vehicle","vehicle hog c1","vehicle hog c2","vehicle hog c3"])
+        img = image_util.arrangeImages([img, ch1, ch2, ch3, hog_image_c1, hog_image_c2, hog_image_c3], ["original", "c1", "c2", "c3", "hog c1","hog c2","hog c3"])
         
-        image_util.saveImage(img, TEST_OUT_DIR + "/vehicle_hog"+str(index)+"_orient"+str(orientations)+"_pix_per_cell"+str(pix_per_cell)+"_cell_per_block"+str(cell_per_block)+"_"+str(color)+".png")
-
-        
-        non_vehicle_img = image_util.loadImageRGB(self.non_vehicles[index])
-        hog_non_vehicle_image_c1, hog_non_vehicle_image_c2, hog_non_vehicle_image_c3 = self.hogChannels(non_vehicle_img, orientations=orientations, pix_per_cell=pix_per_cell, cell_per_block=cell_per_block, color=color)
-
-        img = image_util.arrangeImages([non_vehicle_img, hog_non_vehicle_image_c1, hog_non_vehicle_image_c2, hog_non_vehicle_image_c3], ["non vehicle","non vehicle hog c1","non vehicle hog c2","non vehicle hog c3"])
-        
-        image_util.saveImage(img, TEST_OUT_DIR + "/non_vehicle_hog"+str(index)+"_orient"+str(orientations)+"_pix_per_cell"+str(pix_per_cell)+"_cell_per_block"+str(cell_per_block)+"_"+str(color)+".png")
-
-
-
+        image_util.saveImage(img, TEST_OUT_DIR + "/"+ prefix +"_orient"+str(orientations)+"_pix_per_cell"+str(pix_per_cell)+"_cell_per_block"+str(cell_per_block)+"_"+str(color)+".png")
 
 
     def test_01_labeled_data(self):
@@ -73,8 +61,11 @@ class FeaturesTest(unittest.TestCase):
     def test_03_hog(self):
         for color in {'RGB2YCrCb', None, 'RGB2LUV', 'RGB2HLS', 'RGB2HSV', 'RGB2YUV'}:
             for i in range(1,10):
-                for orientations in {5,8,9,12,13}:
-                    self.visualize_hog(i, orientations=orientations, pix_per_cell=8, cell_per_block=2, color=color)
+                for orientations in {13}:
+                    img = image_util.loadImageRGB(self.vehicles[i])
+                    self.visualize_hog(img, "vehicle_" + str(i), orientations=orientations, pix_per_cell=16, cell_per_block=2, color=color)
+                    img = image_util.loadImageRGB(self.non_vehicles[i])
+                    self.visualize_hog(img, "non_vehicle_" + str(i), orientations=orientations, pix_per_cell=16, cell_per_block=2, color=color)
 
 
 

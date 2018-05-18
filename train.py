@@ -31,9 +31,6 @@ def train(vehicle_files,non_vehicle_files,color_space='YCrCb',orient=9, hog_chan
                                        hog_channel=hog_channel, spatial_feat=spatial_feat,
                                        hist_feat=hist_feat, hog_feat=hog_feat)
     
-    #print(vehicle_files[0])
-    #print(vehicle_features[0])
-    #print(len(vehicle_features))
     # Create an array stack, NOTE: StandardScaler() expects np.float64
     X = np.vstack((vehicle_features, non_vehicle_features)).astype(np.float64)
     

@@ -17,7 +17,6 @@ class ImageUtilTest(unittest.TestCase):
     def setUp(self):
         self.vehicles = image_util.findImageFilesDeep(LABELED_DATA_VEHICLE_DIR)
         self.non_vehicles = image_util.findImageFilesDeep(LABELED_DATA_NON_VEHICLE_DIR)
-
         return
     
     def tearDown(self):

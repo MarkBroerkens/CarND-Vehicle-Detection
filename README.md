@@ -28,8 +28,17 @@ My project includes the following files:
 
 [//]: # (Image References)
 [image1]: ./output_images/vehicle_non_vehicle.png
-[image2]: ./output_images/vehicle_hog1_orient8_pix_per_cell8_cell_per_block2_YCrCb.jpg
-[image2a]: ./output_images/non_vehicle_hog6_orient8_pix_per_cell8_cell_per_block2_YCrCb.jpg
+[imagehog1]: ./output_images/vehicle_1_orient13_pix_per_cell16_cell_per_block2_RGB2YUV.png
+[imagehog2]: ./output_images/vehicle_2_orient13_pix_per_cell16_cell_per_block2_RGB2YUV.png
+[imagehog3]: ./output_images/vehicle_3_orient13_pix_per_cell16_cell_per_block2_RGB2YUV.png
+[imagehog4]: ./output_images/vehicle_4_orient13_pix_per_cell16_cell_per_block2_RGB2YUV.png
+[imagehog5]: ./output_images/vehicle_5_orient13_pix_per_cell16_cell_per_block2_RGB2YUV.png
+[imagenhog1]: ./output_images/non_vehicle_1_orient13_pix_per_cell16_cell_per_block2_RGB2YUV.png
+[imagenhog2]: ./output_images/non_vehicle_2_orient13_pix_per_cell16_cell_per_block2_RGB2YUV.png
+[imagenhog3]: ./output_images/non_vehicle_3_orient13_pix_per_cell16_cell_per_block2_RGB2YUV.png
+[imagenhog4]: ./output_images/non_vehicle_4_orient13_pix_per_cell16_cell_per_block2_RGB2YUV.png
+[imagenhog5]: ./output_images/non_vehicle_5_orient13_pix_per_cell16_cell_per_block2_RGB2YUV.png
+
 [image3]: ./examples/sliding_windows.jpg
 [image4]: ./examples/sliding_window.jpg
 [image5]: ./examples/bboxes_and_heat.png
@@ -126,14 +135,27 @@ Histograms of Ordered Gradients (HOG) were calculated in order to extract featur
 
 
 I explored different color spaces and different `skimage.hog()` parameters (`orientations`, `pixels_per_cell`, and `cells_per_block`).  
-Here are example using the `YCrCb` color space and HOG parameters of `orientations=8`, `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)`:
+Here are example using the `YUV` color space and HOG parameters of `orientations=13`, `pixels_per_cell=(16, 16)` and `cells_per_block=(2, 2)`:
 
-![alt text][image2]
-![alt text][image2a]
+Examples of vehicels
+![alt text][imagehog1]
+![alt text][imagehog2]
+![alt text][imagehog3]
+![alt text][imagehog4]
+![alt text][imagehog5]
 
-I trained a linear `Support Vector Machine` classifier with different `skimage.hog()` parameters in order to figure out which parameters work best on the given training data. The following table is calculated in `test_03_train_hog()` of [test_train.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/tests/test_train.py)
+Exemples of non vehicles
+![alt text][imagenhog1]
+![alt text][imagenhog2]
+![alt text][imagenhog3]
+![alt text][imagenhog4]
+![alt text][imagenhog5]
+
+
+A linear `Support Vector Machine` classifier was trained wis feature vectors that were created by different `skimage.hog()` parameters in order to figure out which parameters work best on the given training data. The following table is calculated in `test_03_train_hog()` of [test_train.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/tests/test_train.py)
 
 | len features | color_space | orient | pix_per_cell | cell_per_block | hog_channel | accuracy | 
+| --------------|---------------|--------|---------------|------------------|----------------|------------|
 | 2940 | HSV | 5 | 8 | 2 | ALL | 0.962 |
 | 6000 | HSV | 5 | 8 | 4 | ALL | 0.965 |
 | 540 | HSV | 5 | 16 | 2 | ALL | 0.971 |
@@ -213,14 +235,18 @@ spartial size of 16, 64 bins.
 
 The best results are marked in the table.
 
-#### 3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
+## Training of the Classifier
 
-I trained a linear SVM using...
+I trained a linear SVM using the following test data that consists of 8792 vehicle images and 8968 non vehicles images
 
 [Test data of vehicles](https://s3.amazonaws.com/udacity-sdc/Vehicle_Tracking/vehicles.zip)
 [Test data of non-vehicles](https://s3.amazonaws.com/udacity-sdc/Vehicle_Tracking/non-vehicles.zip)
 
-https://github.com/udacity/self-driving-car/tree/master/annotations
+The training of the classifier is implemented in function `train()` of [train.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/train.py):
+1. For each image the feature vector is calculated in method `extract_features()` in file 
+2. `sklearn.preprocessing.StandardScaler()`is used to normalize the feature vectors
+3. `sklearn.model_selection.train_test_split()` creates shuffled training and test data and labels
+4. the trained classifier is is saved via pickle so that it can be reused later (see [test_train.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/tests/test_train.py) )
 
 
 # Sliding Window Search
