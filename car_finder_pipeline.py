@@ -71,3 +71,35 @@ class Pipeline:
         draw_img = self.hotspots.draw_labeled_bboxes_with_history(img)
         
         return draw_img
+
+
+    def process_verbose(self,img) :
+        
+        boxes = []
+        
+        # search with box size 64 * 1 = 64
+        ystart = 380
+        ystop = 480
+        scale = 1.0
+        boxes = boxes + find_cars(img, color_space=self.color_space, ystart=ystart, ystop=ystop, scale=scale, svc = self.clf, X_scaler=self.scaler, orient=self.orient, pix_per_cell=self.pix_per_cell, cell_per_block=self.cell_per_block, spatial_size=self.spatial_size, hist_bins=self.hist_bins)
+        
+        # search with box size 64 * 1.5 = 96
+        ystart = 400
+        ystop = 600
+        scale = 1.5
+        boxes = boxes + find_cars(img, color_space=self.color_space,ystart=ystart, ystop=ystop, scale=scale, svc = self.clf, X_scaler=self.scaler, orient=self.orient, pix_per_cell=self.pix_per_cell, cell_per_block=self.cell_per_block, spatial_size=self.spatial_size, hist_bins=self.hist_bins)
+        
+        
+        # search with box size 64 * 2.5 = 160
+        ystart = 500
+        ystop = 700
+        scale = 2.5
+        boxes = boxes + find_cars(img, color_space=self.color_space,ystart=ystart, ystop=ystop, scale=scale, svc = self.clf, X_scaler=self.scaler, orient=self.orient, pix_per_cell=self.pix_per_cell, cell_per_block=self.cell_per_block, spatial_size=self.spatial_size, hist_bins=self.hist_bins)
+        
+        
+        self.hotspots.add_bboxes(boxes)
+        
+        draw_img, heatmap, boxed_image = self.hotspots.draw_labeled_bboxes_with_history_verbose(img)
+        
+        return draw_img, heatmap, boxed_image
+

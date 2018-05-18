@@ -6,6 +6,7 @@ import numpy as np
 import pickle
 import cv2
 from scipy.ndimage.measurements import label
+from lesson_functions import draw_boxes
 
 
 class Hotspots:
@@ -47,6 +48,18 @@ class Hotspots:
         draw_img = self.draw_labeled_bboxes(img, labels)
         #draw_img = self.draw_heatmap(heatmap)
         return  draw_img
+
+    def draw_labeled_bboxes_with_history_verbose(self, img):
+        heatmap_img = np.zeros_like(img[:,:,0])
+        boxed_image = np.copy(img)
+        for bbox_list in self.history:
+            heatmap = self.add_heat(heatmap_img, bbox_list)
+            boxed_image = draw_boxes(boxed_image,bbox_list)
+        heatmap = self.apply_threshold(heatmap, self.history_max_size * 1.5)
+        labels = label(heatmap)
+        draw_img = self.draw_labeled_bboxes(img, labels)
+        #draw_img = self.draw_heatmap(heatmap)
+        return  draw_img, heatmap, boxed_image
 
     def draw_heatmap(self,heatmap):
         fig = plt.figure(figsize=(12.8, 7.2), dpi=100)

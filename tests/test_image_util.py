@@ -19,11 +19,11 @@ class ImageUtilTest(unittest.TestCase):
 
     def test_01_findImageFilesFlat(self):
         image_files_list = uut.findImageFilesFlat(TEST_IMAGES_DIR)
-        self.assertEqual(6,len(image_files_list))
+        self.assertEqual(5,len(image_files_list))
     
     def test_01_findImageFilesDeep(self):
         image_files_list = uut.findImageFilesDeep(TEST_IMAGES_DIR)
-        self.assertEqual(6,len(image_files_list))
+        self.assertEqual(5,len(image_files_list))
 
 
 

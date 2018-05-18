@@ -39,7 +39,17 @@ My project includes the following files:
 [imagenhog4]: ./output_images/non_vehicle_4_orient13_pix_per_cell16_cell_per_block2_RGB2YUV.png
 [imagenhog5]: ./output_images/non_vehicle_5_orient13_pix_per_cell16_cell_per_block2_RGB2YUV.png
 
-[image3]: ./examples/sliding_windows.jpg
+[imagewindow1]: ./output_images/window1.png
+[imagewindow2]: ./output_images/window2.png
+[imagewindow3]: ./output_images/window3.png
+
+
+[identified_boxes0]: ./output_images/identified_boxes0.png
+[identified_boxes1]: ./output_images/identified_boxes1.png
+[identified_boxes2]: ./output_images/identified_boxes2.png
+[identified_boxes3]: ./output_images/identified_boxes3.png
+[identified_boxes4]: ./output_images/identified_boxes4.png
+
 [image4]: ./examples/sliding_window.jpg
 [image5]: ./examples/bboxes_and_heat.png
 [image6]: ./examples/labels_map.png
@@ -58,11 +68,9 @@ Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
 ![alt text][image1]
 
 In order to identify if the images shows a vehicle the following feature extraction techniques are used:
-* Histogram of 
-* 
+* Histogram of Color
+* Spatial Binning
 * Histogram of oriented gradients
-
-
 
 ## Histograms of Color
 The combinations of parameters and its impact on the test accuracy is claculated in test `test_01_train_histogram()` of `test_train.py` 
@@ -76,7 +84,7 @@ The combinations of parameters and its impact on the test accuracy is claculated
 |24 | HSV | 8 | 0.906 |
 |48 | HSV | 16 | 0.946 |
 |96 | HSV | 32 | 0.947 |
-|192 | HSV | 64 | **0.952** |
+|**192** | **HSV** | **64** | **0.952** |
 |24 | LUV | 8 | 0.868 |
 |48 | LUV | 16 | 0.889 |
 |96 | LUV | 32 | 0.910 |
@@ -84,7 +92,7 @@ The combinations of parameters and its impact on the test accuracy is claculated
 |24 | HLS | 8 | 0.888 |
 |48 | HLS | 16 | 0.921 |
 |96 | HLS | 32 | 0.948 |
-|192 | HLS | 64 | **0.961** |
+|**192** | **HLS** | **64** | **0.961** |
 |24 | YUV | 8 | 0.865 |
 |48 | YUV | 16 | 0.889 |
 |96 | YUV | 32 | 0.911 |
@@ -93,10 +101,6 @@ The combinations of parameters and its impact on the test accuracy is claculated
 |48 | YCrCb | 16 | 0.883 |
 |96 | YCrCb | 32 | 0.923 |
 |192 | YCrCb | 64 | 0.936 |
-
-The following parameters resulted in the best test accuracy: color space HLS or HSV with 64 bins which resulted in a test accuracy of more than 95%.
-
-The test was executed twice in order to validate the results.
 
 
 ## Spatial Binning
@@ -119,11 +123,11 @@ The test was executed twice in order to validate the results.
 |3072 | HLS | 32 | 0.870 |
 |12288 | HLS | 64 | 0.877 |
 |192 | YUV | 8 | 0.901 |
-|768 | YUV | 16 | **0.919** |
+|**768** | **YUV** | **16** | **0.919** |
 |3072 | YUV | 32 | 0.901 |
 |12288 | YUV | 64 | 0.896 |
 |192 | YCrCb | 8 | 0.899 |
-|768 | YCrCb | 16 | **0.924** |
+|**768** | **YCrCb** | **16** | **0.924** |
 |3072 | YCrCb | 32 | 0.896 |
 |12288 | YCrCb | 64 | 0.901 |
 
@@ -198,21 +202,21 @@ A linear `Support Vector Machine` classifier was trained wis feature vectors tha
 | 240 | YUV | 5 | 16 | 4 | ALL | 0.978 |
 | 5292 | YUV | 9 | 8 | 2 | ALL | 0.967 |
 | 10800 | YUV | 9 | 8 | 4 | ALL | 0.975 ]|
-| 972 | YUV | 9 | 16 | 2 | ALL | **0.980** |
+| **972** | **YUV** | **9** | **16** | **2** | **ALL** | **0.980** |
 | 432 | YUV | 9 | 16 | 4 | ALL | 0.978 |
-| 7644 | YUV | 13 | 8 | 2 | ALL | **0.980** |
+| **7644** | **YUV** | **13** | **8** | **2** | **ALL** | **0.980** |
 | 15600 | YUV | 13 | 8 | 4 | ALL | 0.970 |
-| 1404 | YUV | 13 | 16 | 2 | ALL | **0.981** |
+| **1404** | **YUV** | **13** | **16** | **2** | **ALL** | **0.981** |
 | 624 | YUV | 13 | 16 | 4 | ALL |  0.973 |
 | 2940 | YCrCb | 5 | 8 | 2 | ALL | 0.964 |
 | 6000 | YCrCb | 5 | 8 | 4 | ALL | 0.969 |
 | 540 | YCrCb | 5 | 16 | 2 | ALL |  0.976 |
-| 240 | YCrCb | 5 | 16 | 4 | ALL | **0.980** |
+| **240** | **YCrCb** | **5** | **16** | **4** | **ALL** | **0.980** |
 | 5292 | YCrCb | 9 | 8 | 2 | ALL | 0.967 |
 | 10800 | YCrCb | 9 | 8 | 4 | ALL | 0.967 |
 | 972 | YCrCb | 9 | 16 | 2 | ALL | 0.976 |
 | 432 | YCrCb | 9 | 16 | 4 | ALL | 0.976 |
-| 7644 | YCrCb | 13 | 8 | 2 | ALL | 0.970 ||
+| 7644 | YCrCb | 13 | 8 | 2 | ALL | 0.970 |
 | 15600 | YCrCb | 13 | 8 | 4 | ALL | 0.974 |
 | 1404 | YCrCb | 13 | 16 | 2 | ALL | 0.977 |
 | 624 | YCrCb | 13 | 16 | 4 | ALL | 0.979 |
@@ -225,7 +229,7 @@ spartial size of 16, 64 bins.
 
 | len features | spatial_feat | hist_feat | hog_feat | accuracy |
 |---------------|--------------|------------|-----------|------------|
-| 2364 | True | True | True | **0.991** |
+| **2364** | **True** | **True** | **True** | **0.991** |
 | 960 | True | True | False | 0.961 |
 | 2172 | True | False | True | 0.986 |
 | 768 | True | False | False | 0.924 |
@@ -250,18 +254,33 @@ The training of the classifier is implemented in function `train()` of [train.py
 
 
 # Sliding Window Search
+The trained classifier is applied on sliding windows of different sizes. Small sizes are applied in parts of the image where the vehicles are expected to be small. Bigger windows are used at the lower part of the image where they are expected to be big.
 
-#### 1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
+ystart = 380
+ystop = 480
+scale = 1.0
+![alt text][imagewindow1]
 
-I decided to search random window positions at random scales all over the image and came up with this (ok just kidding I didn't actually ;):
+ystart = 400
+ystop = 600
+scale = 1.5
+![alt text][imagewindow2]
 
-![alt text][image3]
+ystart = 500
+ystop = 700
+scale = 2.5
+![alt text][imagewindow3]
 
-#### 2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
+The pipeline for detection of cars is implemented in function `process()` in file [car_finder_pipeline.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/car_finder_pipeline.py). If the classifier detects a car in the window, then the window is added to the set of `hot` boxes. 
 
-Ultimately I searched on two scales using YCrCb 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example images:
+Ultimately I searched on three scales using YUV 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example images:
 
-![alt text][image4]
+![alt text][identified_boxes0]
+![alt text][identified_boxes1]
+![alt text][identified_boxes2]
+![alt text][identified_boxes3]
+![alt text][identified_boxes4]
+
 ---
 
 # Video Implementation

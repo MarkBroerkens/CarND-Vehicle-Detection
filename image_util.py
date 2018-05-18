@@ -73,10 +73,10 @@ def saveBeforeAfterImages(before_img, before_text, after_img, after_text,path):
     plt.close(figure)
 
 # inspired by https://gist.github.com/soply/f3eec2e79c165e39c9d540e916142ae1
-def arrangeImages(images, titles, cols = 1):
+def arrangeImages(images, titles, cols = 1, figsize=(6, 4)):
     assert((titles is None)or (len(images) == len(titles)))
     n_images = len(images)
-    fig = plt.figure(figsize=(6, 4), dpi=80)
+    fig = plt.figure(figsize=figsize, dpi=80)
     fig.set_tight_layout(True)
     fig.patch.set_alpha(0)
     for n, (image, title) in enumerate(zip(images, titles)):
