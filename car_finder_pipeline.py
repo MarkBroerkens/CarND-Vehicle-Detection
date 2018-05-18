@@ -25,7 +25,8 @@ class Pipeline:
         self.clf            = dist_pickle["clf"]
         self.scaler         = dist_pickle["X_scaler"]
         self.accu           = dist_pickle["accu"]
-        self.hotspots       = hotspots.Hotspots(10)
+        self.time           = dist_pickle["time"]
+        self.hotspots       = hotspots.Hotspots(20)
 
         print ("Config")
         print ("color_space: " + str(self.color_space ))
@@ -39,6 +40,7 @@ class Pipeline:
         print ("hist_feat: " + str(self.hist_feat))
         print ("hog_feat: " + str(self.hog_feat))
         print ("accu: " + str(self.accu))
+        print ("time: " + str(self.time))
 
     def process(self,img) :
 

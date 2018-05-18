@@ -109,8 +109,7 @@ The test was executed twice in order to validate the results.
 |3072 | YCrCb | 32 | 0.896 |
 |12288 | YCrCb | 64 | 0.901 |
 
-The following parameters resulted in the best test accuracy (>92%): color space YCrCb with spatial size of 16.
-The test was executed twice in order to validate the results.
+The best results are marked in the table.
 
 
 ## HOG parameters.
@@ -130,23 +129,23 @@ The test was executed twice in order to validate the results.
 | 624 | HSV | 13 | 16 | 4 | ALL | 0.968 |
 | 2940 | LUV | 5 | 8 | 2 | ALL | 0.967 |
 | 6000 | LUV | 5 | 8 | 4 | ALL | 0.968 |
-| 540 | LUV | 5 | 16 | 2 | ALL | **0.976** |
-| 240 | LUV | 5 | 16 | 4 | ALL | **0.975** |
+| 540 | LUV | 5 | 16 | 2 | ALL | 0.976 |
+| 240 | LUV | 5 | 16 | 4 | ALL | 0.975 |
 | 5292 | LUV | 9 | 8 | 2 | ALL | 0.965 |
 | 10800 | LUV | 9 | 8 | 4 | ALL | 0.966 |
-| 972 | LUV | 9 | 16 | 2 | ALL | **0.976** |
-| 432 | LUV | 9 | 16 | 4 | ALL | **0.977** |
+| 972 | LUV | 9 | 16 | 2 | ALL | 0.976 |
+| 432 | LUV | 9 | 16 | 4 | ALL | 0.977 |
 | 7644 | LUV | 13 | 8 | 2 | ALL | 0.969 |
 | 15600 | LUV | 13 | 8 | 4 | ALL | 0.969 |
-| 1404 | LUV | 13 | 16 | 2 | ALL | **0.983** |
-| 624 | LUV | 13 | 16 | 4 | ALL | **0.976** |
+| 1404 | LUV | 13 | 16 | 2 | ALL | 0.983 |
+| 624 | LUV | 13 | 16 | 4 | ALL | 0.976 |
 | 2940 | HLS | 5 | 8 | 2 | ALL | 0.957 |
 | 6000 | HLS | 5 | 8 | 4 | ALL | 0.966 |
-| 540 | HLS | 5 | 16 | 2 | ALL | **0.972** |
+| 540 | HLS | 5 | 16 | 2 | ALL | 0.972 |
 | 240 | HLS | 5 | 16 | 4 | ALL | 0.962 |
 | 5292 | HLS | 9 | 8 | 2 | ALL | 0.949 |
 | 10800 | HLS | 9 | 8 | 4 | ALL | 0.952 |
-| 972 | HLS | 9 | 16 | 2 | ALL | **0.972** |
+| 972 | HLS | 9 | 16 | 2 | ALL | 0.972*|
 | 432 | HLS | 9 | 16 | 4 | ALL | 0.968 |
 | 7644 | HLS | 13 | 8 | 2 | ALL | 0.944 |
 | 15600 | HLS | 13 | 8 | 4 | ALL | 0.949 |
@@ -154,30 +153,30 @@ The test was executed twice in order to validate the results.
 | 624 | HLS | 13 | 16 | 4 | ALL | 0.969 |
 | 2940 | YUV | 5 | 8 | 2 | ALL | 0.965 |
 | 6000 | YUV | 5 | 8 | 4 | ALL | 0.969 |
-| 540 | YUV | 5 | 16 | 2 | ALL | **0.976** |
-| 240 | YUV | 5 | 16 | 4 | ALL | **0.978** |
+| 540 | YUV | 5 | 16 | 2 | ALL | 0.976 |
+| 240 | YUV | 5 | 16 | 4 | ALL | 0.978 |
 | 5292 | YUV | 9 | 8 | 2 | ALL | 0.967 |
-| 10800 | YUV | 9 | 8 | 4 | ALL | **0.975** |
+| 10800 | YUV | 9 | 8 | 4 | ALL | 0.975 ]|
 | 972 | YUV | 9 | 16 | 2 | ALL | **0.980** |
-| 432 | YUV | 9 | 16 | 4 | ALL | **0.978** |
+| 432 | YUV | 9 | 16 | 4 | ALL | 0.978 |
 | 7644 | YUV | 13 | 8 | 2 | ALL | **0.980** |
-| 15600 | YUV | 13 | 8 | 4 | ALL | **0.970** |
+| 15600 | YUV | 13 | 8 | 4 | ALL | 0.970 |
 | 1404 | YUV | 13 | 16 | 2 | ALL | **0.981** |
-| 624 | YUV | 13 | 16 | 4 | ALL | **0.973** |
+| 624 | YUV | 13 | 16 | 4 | ALL |  0.973 |
 | 2940 | YCrCb | 5 | 8 | 2 | ALL | 0.964 |
 | 6000 | YCrCb | 5 | 8 | 4 | ALL | 0.969 |
-| 540 | YCrCb | 5 | 16 | 2 | ALL | **0.976** |
+| 540 | YCrCb | 5 | 16 | 2 | ALL |  0.976 |
 | 240 | YCrCb | 5 | 16 | 4 | ALL | **0.980** |
 | 5292 | YCrCb | 9 | 8 | 2 | ALL | 0.967 |
 | 10800 | YCrCb | 9 | 8 | 4 | ALL | 0.967 |
-| 972 | YCrCb | 9 | 16 | 2 | ALL | **0.976** |
-| 432 | YCrCb | 9 | 16 | 4 | ALL | **0.976** |
-| 7644 | YCrCb | 13 | 8 | 2 | ALL | **0.970** |
-| 15600 | YCrCb | 13 | 8 | 4 | ALL | **0.974** |
-| 1404 | YCrCb | 13 | 16 | 2 | ALL | **0.977**|
-| 624 | YCrCb | 13 | 16 | 4 | ALL | **0.979**|
+| 972 | YCrCb | 9 | 16 | 2 | ALL | 0.976 |
+| 432 | YCrCb | 9 | 16 | 4 | ALL | 0.976 |
+| 7644 | YCrCb | 13 | 8 | 2 | ALL | 0.970 ||
+| 15600 | YCrCb | 13 | 8 | 4 | ALL | 0.974 |
+| 1404 | YCrCb | 13 | 16 | 2 | ALL | 0.977 |
+| 624 | YCrCb | 13 | 16 | 4 | ALL | 0.979 |
 
-The following parameters resulted in the best test accuracy (>98%) and reasonable effort: color space YUV, number of orientations=5, pix per cell 16, cells per block 2, and hog channels = "All".
+The best results are marked in the table.
 
 ## Parameters
 color space YCrCb, number of orientations=5, pix per cell 16, cells per block 4, and hog channels = "All", 
@@ -248,8 +247,13 @@ Here's an example result showing the heatmap from a series of frames of video, t
 ---
 
 # Discussion
+While implementing this project I frequently ran into the situation where I tried to reuse a classifier that was trained using different feaure extraction strategies and parameters. By adding the parameters into the pickle files as well, I could increase my development speed.
 
-#### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
+The results of the vehicle detections imporoved significantly by improving the following aspects of the code:
+* improve accuracy of classifier
+* eleminiation of false positives by considering the hotspots of the last frames
 
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
+Since the classifier was trained on a quite small training set, the classifier might not work as well as in the provided data. E.g. I applied the vehicle detection algorithm on the challening video of the last project and found out that it did not work so well.
+
+For improved classification results we might be able to find a better feature extraction mechanism or we could use a CNN such as [YOLO](https://pjreddie.com/darknet/yolo/) ("You only look once")
 

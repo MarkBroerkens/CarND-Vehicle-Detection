@@ -3,6 +3,7 @@ import os
 import unittest
 import cv2
 import pickle
+import time
 
 sys.path.append("..")
 import image_util
@@ -64,10 +65,10 @@ class ImageUtilTest(unittest.TestCase):
 
     def test_05_train_and_save(self):
         color_space='YUV'
-        hist_bins=16
+        hist_bins=64
         spatial_size=16
         orient=13
-        pix_per_cell=8
+        pix_per_cell=16
         cell_per_block=2
         hog_channel='ALL'
         spatial_feat=True
@@ -92,6 +93,7 @@ class ImageUtilTest(unittest.TestCase):
         dist_pickle["X_scaler"] = X_scaler
         dist_pickle["accu"] = accu
         dist_pickle["feature_len"] = len
+        dist_pickle["time"] = time.time()
         with open("train_pickle.p", "wb") as f:
             pickle.dump( dist_pickle, f )
 

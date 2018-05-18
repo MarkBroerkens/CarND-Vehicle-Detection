@@ -22,7 +22,7 @@ class TestVideo(unittest.TestCase):
     def _test_ident(self):
         uut.process("../input_videos/project_video.mp4",TEST_OUT_DIR+"/project_video.mp4",cb,subC=(3,6))
     
-    def _test_pipe_project(self):
+    def test_pipe_project(self):
         p = car_finder_pipeline.Pipeline()
         uut.process("../input_videos/project_video.mp4",TEST_OUT_DIR+"/L_project_video.mp4",p.process)#,subC=(15,20))
 
@@ -34,7 +34,7 @@ class TestVideo(unittest.TestCase):
         p = car_finder_pipeline.Pipeline()
         uut.process("../input_videos/harder_challenge_video.mp4",TEST_OUT_DIR+"/L_harder_challenge_video.mp4",p.process)#,subC=(0,15))
 
-    def test_pipe_test_video(self):
+    def _test_pipe_test_video(self):
         p = car_finder_pipeline.Pipeline()
         uut.process("../input_videos/test_video.mp4",TEST_OUT_DIR+"/L_test_video.mp4",p.process)#,subC=(0,15))
 

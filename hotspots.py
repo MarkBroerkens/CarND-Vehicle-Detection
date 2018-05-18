@@ -42,7 +42,7 @@ class Hotspots:
         
         for bbox_list in self.history:
             heatmap = self.add_heat(heatmap_img, bbox_list)
-            heatmap = self.apply_threshold(heatmap, 3)
+            heatmap = self.apply_threshold(heatmap, self.history_max_size / 3)
         labels = label(heatmap)
         draw_img = self.draw_labeled_bboxes(img, labels)
         #draw_img = self.draw_heatmap(heatmap)

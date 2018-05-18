@@ -111,17 +111,17 @@ def find_cars(img, ystart, ystop, scale, svc, X_scaler, color_space, orient, pix
     img_tosearch = img[ystart:ystop,:,:]
     if color_space != 'RGB':
         if color_space == 'HSV':
-            ctrans_tosearch = cv2.cvtColor(img, cv2.COLOR_RGB2HSV)
+            ctrans_tosearch = cv2.cvtColor(img_tosearch, cv2.COLOR_RGB2HSV)
         elif color_space == 'LUV':
-            ctrans_tosearch = cv2.cvtColor(img, cv2.COLOR_RGB2LUV)
+            ctrans_tosearch = cv2.cvtColor(img_tosearch, cv2.COLOR_RGB2LUV)
         elif color_space == 'HLS':
-            ctrans_tosearch = cv2.cvtColor(img, cv2.COLOR_RGB2HLS)
+            ctrans_tosearch = cv2.cvtColor(img_tosearch, cv2.COLOR_RGB2HLS)
         elif color_space == 'YUV':
-            ctrans_tosearch = cv2.cvtColor(img, cv2.COLOR_RGB2YUV)
+            ctrans_tosearch = cv2.cvtColor(img_tosearch, cv2.COLOR_RGB2YUV)
         elif color_space == 'YCrCb':
-            ctrans_tosearch = cv2.cvtColor(img, cv2.COLOR_RGB2YCrCb)
+            ctrans_tosearch = cv2.cvtColor(img_tosearch, cv2.COLOR_RGB2YCrCb)
     else:
-        ctrans_tosearch = np.copy(img)
+        ctrans_tosearch = np.copy(img_tosearch)
 
     if scale != 1:
         imshape = ctrans_tosearch.shape
