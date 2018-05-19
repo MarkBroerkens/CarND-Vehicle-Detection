@@ -1,31 +1,5 @@
 [![Udacity - Self-Driving Car NanoDegree](https://s3.amazonaws.com/udacity-sdc/github/shield-carnd.svg)](http://www.udacity.com/drive)
 
-# The Project
-
-The goals / steps of this project are the following:
-
-* Perform a Histogram of Oriented Gradients (HOG) feature extraction on a labeled training set of images and train a classifier Linear SVM classifier
-* Optionally, you can also apply a color transform and append binned color features, as well as histograms of color, to your HOG feature vector. 
-* Note: for those first two steps don't forget to normalize your features and randomize a selection for training and testing.
-* Implement a sliding-window technique and use your trained classifier to search for vehicles in images.
-* Run your pipeline on a video stream (start with the test_video.mp4 and later implement on full project_video.mp4) and create a heat map of recurring detections frame by frame to reject outliers and follow detected vehicles.
-* Estimate a bounding box for vehicles detected.
-
-# Overview of Files
-My project includes the following files:
-* [README.md](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/README.md) (writeup report) documentation of the results
-* [L_project_video.mp4](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/output_images/L_project_video.mp4) the movie that shows the detected vehicles
-* [hotspots.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/hotspots.py) implementation of heatmap 
-* [train.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/train.py) code for training the classifier
-* [train_pickle.p](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/train_pickle.p) saved classifier including the parmeters that have been used for training and feature extraction
-* [videoprocess.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/videoprocess.py) processes the video
-* [search_and_classify.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/search_and_classify.py) detection of vehicles in images
-* [image_util.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/image_util.py) utility for loading and saving of images
-* [lesson_functions.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/lesson_functions.py) some functions from the lesson
-* [car_finder_pipeline.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/car_finder_pipeline.py) the pipeline that for vehicle detection
-
-
-
 [//]: # (Image References)
 [image1]: ./output_images/vehicle_non_vehicle.png
 [imagehog1]: ./output_images/vehicle_1_orient13_pix_per_cell16_cell_per_block2_RGB2YUV.png
@@ -66,6 +40,37 @@ My project includes the following files:
 [image6]: ./examples/labels_map.png
 [image7]: ./examples/output_bboxes.png
 [video1]: ./project_video.mp4
+
+
+
+# The Project
+
+The goals / steps of this project are the following:
+
+* Perform a Histogram of Oriented Gradients (HOG) feature extraction on a labeled training set of images and train a classifier Linear SVM classifier
+* Optionally, you can also apply a color transform and append binned color features, as well as histograms of color, to your HOG feature vector. 
+* Note: for those first two steps don't forget to normalize your features and randomize a selection for training and testing.
+* Implement a sliding-window technique and use your trained classifier to search for vehicles in images.
+* Run your pipeline on a video stream (start with the test_video.mp4 and later implement on full project_video.mp4) and create a heat map of recurring detections frame by frame to reject outliers and follow detected vehicles.
+* Estimate a bounding box for vehicles detected.
+
+# Overview of Files
+My project includes the following files:
+* [README.md](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/README.md) (writeup report) documentation of the results
+* [L_project_video.mp4](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/output_images/L_project_video.mp4) the movie that shows the detected vehicles
+
+* [car_finder_pipeline.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/car_finder_pipeline.py) the pipeline that for vehicle detection
+* [hotspots.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/hotspots.py) implementation of heatmap 
+* [image_util.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/image_util.py) utility for loading and saving of images
+* [lesson_functions.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/lesson_functions.py) some functions from the lesson
+* [search_and_classify.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/search_and_classify.py) detection of vehicles in images
+* [train.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/train.py) code for training the classifier
+* [train_pickle.p](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/train_pickle.p) saved classifier including the parmeters that have been used for training and feature extraction
+* [videoprocess.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/videoprocess.py) processes the video
+
+
+
+
 
 
 
@@ -282,9 +287,14 @@ The trained classifier is applied on sliding windows of different sizes. Small s
 * scale = 2.5
 ![alt text][imagewindow3]
 
-The pipeline for detection of cars is implemented in function `process()` in file [car_finder_pipeline.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/car_finder_pipeline.py). If the classifier detects a car in the window, then the window is added to the set of `hot` boxes. 
+The pipeline for detection of cars is implemented in function `process()` in file [car_finder_pipeline.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/car_finder_pipeline.py). It consists of the following steps:
 
-Ultimately I searched on three scales using YUV 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example images:
+1. Search for vehicles using the aformentioned sliding windows approach (see the `find_cars()` that is implemented in [search_and_classify.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/search_and_classify.py) )
+2. f the classifier detects a car in the window, then the window is added to the set of `hot` boxes. 
+3. These boxes are then combined in a heatmap that shows how many boxes overlap at each point in the image. 
+4. I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap (see [hotspots.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/hotspots.py)). I then assumed each blob corresponded to a vehicle.  I constructed bounding boxes to cover the area of each blob detected.  
+
+Ultimately I searched on three scales using YUV 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example images of the results and the intermediate calculations:
 
 ![alt text][readme_test_images_process0]
 ![alt text][readme_test_images_process1]
@@ -299,14 +309,9 @@ Ultimately I searched on three scales using YUV 3-channel HOG features plus spat
 
 Here's a [link to my video result](./output_images/L_project_video.mp4)
 
+In order to reduce the false positives leverage I included detections of vehicles in previous frames (see [hotspots.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/hotspots.py), `draw_labeled_bboxes_with_history()`)
 
-#### 2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
-
-I recorded the positions of positive detections in each frame of the video.  From the positive detections I created a heatmap and then thresholded that map to identify vehicle positions.  I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap.  I then assumed each blob corresponded to a vehicle.  I constructed bounding boxes to cover the area of each blob detected.  
-
-Here's an example result showing the heatmap from a series of frames of video, the result of `scipy.ndimage.measurements.label()` and the bounding boxes then overlaid on the last frame of video:
-
-### Here are 8 frames and their corresponding heatmaps:
+Here's an example showing results and the intermediate work product of a sequence of frames in the project video.:
 
 ![alt text][readme_videoprocess1]
 ![alt text][readme_videoprocess2]
@@ -317,10 +322,7 @@ Here's an example result showing the heatmap from a series of frames of video, t
 ![alt text][readme_videoprocess7]
 ![alt text][readme_videoprocess8]
 
-### Here is the output of `scipy.ndimage.measurements.label()` on the integrated heatmap from all six frames:
-![alt text][image6]
-
-### Here the resulting bounding boxes are drawn onto the last frame in the series:
+Here the resulting bounding boxes are drawn onto the last frame in the series:
 ![alt text][readme_videoprocess_with_history8]
 
 
@@ -330,11 +332,13 @@ Here's an example result showing the heatmap from a series of frames of video, t
 # Discussion
 While implementing this project I frequently ran into the situation where I tried to reuse a classifier that was trained using different feaure extraction strategies and parameters. By adding the parameters into the pickle files as well, I could increase my development speed.
 
-The results of the vehicle detections imporoved significantly by improving the following aspects of the code:
+The results of the vehicle detections improved significantly by improving the following aspects of the code:
 * improve accuracy of classifier
 * eleminiation of false positives by considering the hotspots of the last frames
 
-Since the classifier was trained on a quite small training set, the classifier might not work as well as in the provided data. If no additional "real" data is available, then augmentation techniques could be used to increase the size of training data. 
+Since the classifier was trained on a quite small training set, the classifier might not work as well as in the provided data. We could improve the training set by:
+* augmentation of existing training data. 
+* extracting additional images from the given project video Note: we can especially focus on detected false positives which should be added to the set of non vehicles and locations where vehicles were not properly detected.
 
-For improved classification results we might be able to find a better feature extraction mechanism or we could use a CNN such as [YOLO](https://pjreddie.com/darknet/yolo/) ("You only look once")
+For improved classification results we might be able to find a better feature extraction mechanism or we could use a CNN such as [YOLO](https://pjreddie.com/darknet/yolo/) ("You only look once"). Additionally, we could try to improve the parameters of the classifier using `sklearn.model_selection.GridSearchCV`.
 
