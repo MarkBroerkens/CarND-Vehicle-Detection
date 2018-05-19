@@ -319,7 +319,7 @@ Here's an example result showing the heatmap from a series of frames of video, t
 ![alt text][image6]
 
 ### Here the resulting bounding boxes are drawn onto the last frame in the series:
-![alt text][readme_videoprocess_with_history_8]
+![alt text][readme_videoprocess_with_history8]
 
 
 
