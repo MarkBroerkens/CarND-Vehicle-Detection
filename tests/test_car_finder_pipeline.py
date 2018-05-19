@@ -13,6 +13,7 @@ import train
 
 
 IMG_DIR="../test_images"
+IMG_DIR2="../input_videos"
 TEST_OUT_DIR="pipeline"
 
 class TestCarFinderPipeline(unittest.TestCase):
@@ -21,11 +22,10 @@ class TestCarFinderPipeline(unittest.TestCase):
         if not os.path.exists(TEST_OUT_DIR):
             os.makedirs(TEST_OUT_DIR)
 
-    def test_process(self) :
+    def _test_process(self) :
         p = pipeline.Pipeline(1)
         imgs = image_util.loadImagesRGB(IMG_DIR)
         for i,img in enumerate(imgs):
-            #img = img.astype(np.float32)/255
             processed_img = p.process(np.copy(img))
             
             out = image_util.arrangeImages([img, processed_img], ["original","car detection"], figsize=(4,2))
@@ -33,13 +33,19 @@ class TestCarFinderPipeline(unittest.TestCase):
 
     def test_readme_images(self) :
         p = pipeline.Pipeline(1)
-        imgs = image_util.loadImagesRGB(IMG_DIR)
+        imgs = image_util.loadImagesRGB(IMG_DIR2)
         for i,img in enumerate(imgs):
-            #img = img.astype(np.float32)/255
             draw_img, heatmap, boxed_image = p.process_verbose(np.copy(img))
         
             out = image_util.arrangeImages([img, boxed_image, heatmap, draw_img], ["original","car detections", "heatmap", "result"], figsize=(4,1))
-            image_util.saveImage(out, TEST_OUT_DIR+"/identified_boxes"+str(i)+".png")
+            image_util.saveImage(out, TEST_OUT_DIR+"/readme_videoprocess"+str(i)+".png")
+        p = pipeline.Pipeline(9)
+        imgs = image_util.loadImagesRGB(IMG_DIR2)
+        for i,img in enumerate(imgs):
+            draw_img, heatmap, boxed_image = p.process_verbose(np.copy(img))
+            out = image_util.arrangeImages([img, boxed_image, heatmap, draw_img], ["original","car detections", "heatmap", "result"], figsize=(4,1))
+            image_util.saveImage(out, TEST_OUT_DIR+"/readme_videoprocess_with_history"+str(i)+".png")
+
 
 
 if __name__ == '__main__':

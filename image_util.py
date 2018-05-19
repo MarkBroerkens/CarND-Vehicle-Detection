@@ -8,10 +8,10 @@ import numpy as np
 
 def loadImagesRGB(path):
     images_list=[]
-    for fn in glob.glob(path+"/*.jpg"):
+    for fn in sorted(glob.glob(path+"/*.jpg")):
         images_list.append(loadImageRGB(fn))
     
-    for fn in glob.glob(path+"/*.png"):
+    for fn in sorted(glob.glob(path+"/*.png")):
         images_list.append(loadImageRGB(fn))
     
     return images_list
@@ -32,10 +32,10 @@ def findImageFilesDeep(path):
 
 def findImageFilesFlat(path):
     image_files_list=[]
-    for fn in glob.glob(path+"/*.jpg"):
+    for fn in sorted(glob.glob(path+"/*.jpg")):
         image_files_list.append(fn)
 
-    for fn in glob.glob(path+"/*.png"):
+    for fn in sorted(glob.glob(path+"/*.png")):
         image_files_list.append(fn)
     return image_files_list
 

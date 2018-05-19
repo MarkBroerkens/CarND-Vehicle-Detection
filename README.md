@@ -50,6 +50,16 @@ My project includes the following files:
 [identified_boxes3]: ./output_images/identified_boxes3.png
 [identified_boxes4]: ./output_images/identified_boxes4.png
 
+[readme_videoprocess1]: ./output_images/readme_videoprocess1.png
+[readme_videoprocess2]: ./output_images/readme_videoprocess2.png
+[readme_videoprocess3]: ./output_images/readme_videoprocess3.png
+[readme_videoprocess4]: ./output_images/readme_videoprocess4.png
+[readme_videoprocess5]: ./output_images/readme_videoprocess5.png
+[readme_videoprocess6]: ./output_images/readme_videoprocess6.png
+[readme_videoprocess7]: ./output_images/readme_videoprocess7.png
+[readme_videoprocess8]: ./output_images/readme_videoprocess8.png
+[readme_videoprocess_with_history8]: ./output_images/readme_videoprocess_with_history8.png
+
 [image4]: ./examples/sliding_window.jpg
 [image5]: ./examples/bboxes_and_heat.png
 [image6]: ./examples/labels_map.png
@@ -256,19 +266,19 @@ The training of the classifier is implemented in function `train()` of [train.py
 # Sliding Window Search
 The trained classifier is applied on sliding windows of different sizes. Small sizes are applied in parts of the image where the vehicles are expected to be small. Bigger windows are used at the lower part of the image where they are expected to be big.
 
-ystart = 380
-ystop = 480
-scale = 1.0
+* ystart = 380
+* ystop = 480
+* scale = 1.0
 ![alt text][imagewindow1]
 
-ystart = 400
-ystop = 600
-scale = 1.5
+* ystart = 400
+* ystop = 600
+* scale = 1.5
 ![alt text][imagewindow2]
 
-ystart = 500
-ystop = 700
-scale = 2.5
+* ystart = 500
+* ystop = 700
+* scale = 2.5
 ![alt text][imagewindow3]
 
 The pipeline for detection of cars is implemented in function `process()` in file [car_finder_pipeline.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/car_finder_pipeline.py). If the classifier detects a car in the window, then the window is added to the set of `hot` boxes. 
@@ -294,15 +304,22 @@ I recorded the positions of positive detections in each frame of the video.  Fro
 
 Here's an example result showing the heatmap from a series of frames of video, the result of `scipy.ndimage.measurements.label()` and the bounding boxes then overlaid on the last frame of video:
 
-### Here are six frames and their corresponding heatmaps:
+### Here are 8 frames and their corresponding heatmaps:
 
-![alt text][image5]
+![alt text][readme_videoprocess1]
+![alt text][readme_videoprocess2]
+![alt text][readme_videoprocess3]
+![alt text][readme_videoprocess4]
+![alt text][readme_videoprocess5]
+![alt text][readme_videoprocess6]
+![alt text][readme_videoprocess7]
+![alt text][readme_videoprocess8]
 
 ### Here is the output of `scipy.ndimage.measurements.label()` on the integrated heatmap from all six frames:
 ![alt text][image6]
 
 ### Here the resulting bounding boxes are drawn onto the last frame in the series:
-![alt text][image7]
+![alt text][readme_videoprocess8]
 
 
 

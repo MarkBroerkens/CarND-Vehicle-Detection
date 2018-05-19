@@ -8,3 +8,4 @@ def process(clipFile, outputFile,cb,subC=None) :
     trafoClip = clip1.fl_image(cb) #NOTE: this function expects color images!!
     trafoClip.write_videofile(outputFile, audio=False)
 
+
