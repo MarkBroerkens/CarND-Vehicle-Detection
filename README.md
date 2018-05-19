@@ -47,11 +47,10 @@
 
 The goals / steps of this project are the following:
 
-* Perform a Histogram of Oriented Gradients (HOG) feature extraction on a labeled training set of images and train a classifier Linear SVM classifier
-* Optionally, you can also apply a color transform and append binned color features, as well as histograms of color, to your HOG feature vector. 
-* Note: for those first two steps don't forget to normalize your features and randomize a selection for training and testing.
-* Implement a sliding-window technique and use your trained classifier to search for vehicles in images.
-* Run your pipeline on a video stream (start with the test_video.mp4 and later implement on full project_video.mp4) and create a heat map of recurring detections frame by frame to reject outliers and follow detected vehicles.
+* Perform a Histogram of Oriented Gradients (HOG) feature extraction on a labeled training set of images and train a Linear SVM classifier
+* Apply a color transform and append binned color features, as well as histograms of color
+* Implement a sliding-window technique and use a trained classifier to search for vehicles in images.
+* Run your pipeline on a video stream and create a heat map of recurring detections frame by frame to reject outliers and follow detected vehicles.
 * Estimate a bounding box for vehicles detected.
 
 # Overview of Files
@@ -69,11 +68,6 @@ My project includes the following files:
 * [videoprocess.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/videoprocess.py) processes the video
 
 
-
-
-
-
-
 # Feature Extraction and Training of Classfier
 
 ## Feature extraction from the training images
@@ -83,13 +77,13 @@ Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
 
 ![alt text][image1]
 
-In order to identify if the images shows a vehicle the following feature extraction techniques are used:
+In order to identify if the images that show a vehicle the following feature extraction techniques are used:
 * Histogram of Color
 * Spatial Binning
 * Histogram of oriented gradients
 
 ## Histograms of Color
-The combinations of parameters and its impact on the test accuracy is claculated in test `test_01_train_histogram()` of `test_train.py` 
+The combinations of parameters and its impact on the test accuracy is claculated in test `test_01_train_histogram()` of [test_train.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/tests/test_train.py)
 
 | Number of features | Color space | Numer of bins | Test Accuracy |
 | -----------------------|---------------|------------------|------------------|
@@ -120,6 +114,8 @@ The combinations of parameters and its impact on the test accuracy is claculated
 
 
 ## Spatial Binning
+The combinations of parameters and its impact on the test accuracy is claculated in test `test_02_train_spatial` of [test_train.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/tests/test_train.py)
+
 | Number of features | Color space | Spartial Size | Test Accuracy |
 | -----------------------|---------------|------------------|------------------|
 |192 | RGB | 8 | 0.902 |
@@ -152,7 +148,6 @@ The best results are marked in the table.
 
 ## Gradient Features
 Histograms of Ordered Gradients (HOG) were calculated in order to extract features with respect of the shape of the vehicle.
-
 
 I explored different color spaces and different `skimage.hog()` parameters (`orientations`, `pixels_per_cell`, and `cells_per_block`).  
 Here are example using the `YUV` color space and HOG parameters of `orientations=13`, `pixels_per_cell=(16, 16)` and `cells_per_block=(2, 2)`:
