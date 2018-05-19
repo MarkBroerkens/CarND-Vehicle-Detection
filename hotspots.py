@@ -59,7 +59,7 @@ class Hotspots:
         labels = label(heatmap)
         draw_img = self.draw_labeled_bboxes(img, labels)
         #draw_img = self.draw_heatmap(heatmap)
-        return  draw_img, heatmap, boxed_image
+        return  draw_img, labels, heatmap, boxed_image
 
     def draw_heatmap(self,heatmap):
         fig = plt.figure(figsize=(12.8, 7.2), dpi=100)

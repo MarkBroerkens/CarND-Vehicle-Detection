@@ -31,20 +31,32 @@ class TestCarFinderPipeline(unittest.TestCase):
             out = image_util.arrangeImages([img, processed_img], ["original","car detection"], figsize=(4,2))
             image_util.saveImage(out, TEST_OUT_DIR+"/identified_boxes"+str(i)+".png")
 
-    def test_readme_images(self) :
+    def test_readme_video_images(self) :
+        # images from sequence in video
         p = pipeline.Pipeline(1)
         imgs = image_util.loadImagesRGB(IMG_DIR2)
         for i,img in enumerate(imgs):
-            draw_img, heatmap, boxed_image = p.process_verbose(np.copy(img))
+            draw_img, labels, heatmap, boxed_image = p.process_verbose(np.copy(img))
         
-            out = image_util.arrangeImages([img, boxed_image, heatmap, draw_img], ["original","car detections", "heatmap", "result"], figsize=(4,1))
+            out = image_util.arrangeImages([img, boxed_image, heatmap, labels[0], draw_img], ["original","car detections", "heatmap", "labels", "result"], figsize=(4,1))
             image_util.saveImage(out, TEST_OUT_DIR+"/readme_videoprocess"+str(i)+".png")
         p = pipeline.Pipeline(9)
         imgs = image_util.loadImagesRGB(IMG_DIR2)
         for i,img in enumerate(imgs):
-            draw_img, heatmap, boxed_image = p.process_verbose(np.copy(img))
-            out = image_util.arrangeImages([img, boxed_image, heatmap, draw_img], ["original","car detections", "heatmap", "result"], figsize=(4,1))
+            draw_img, labels, heatmap, boxed_image = p.process_verbose(np.copy(img))
+            out = image_util.arrangeImages([img, boxed_image, heatmap, labels[0], draw_img], ["original","car detections", "heatmap", "labels", "result"], figsize=(4,1))
             image_util.saveImage(out, TEST_OUT_DIR+"/readme_videoprocess_with_history"+str(i)+".png")
+
+    def test_readme_video_images(self) :
+        # images from test image folder
+        p = pipeline.Pipeline(1)
+        imgs = image_util.loadImagesRGB(IMG_DIR)
+        for i,img in enumerate(imgs):
+            draw_img, labels, heatmap, boxed_image = p.process_verbose(np.copy(img))
+            
+            out = image_util.arrangeImages([img, boxed_image, heatmap, labels[0], draw_img], ["original","car detections", "heatmap", "labels", "result"], figsize=(4,1))
+            image_util.saveImage(out, TEST_OUT_DIR+"/readme_test_images_process"+str(i)+".png")
+
 
 
 

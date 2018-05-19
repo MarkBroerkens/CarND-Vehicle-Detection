@@ -44,11 +44,12 @@ My project includes the following files:
 [imagewindow3]: ./output_images/windows_3.png
 
 
-[identified_boxes0]: ./output_images/identified_boxes0.png
-[identified_boxes1]: ./output_images/identified_boxes1.png
-[identified_boxes2]: ./output_images/identified_boxes2.png
-[identified_boxes3]: ./output_images/identified_boxes3.png
-[identified_boxes4]: ./output_images/identified_boxes4.png
+[readme_test_images_process0]: ./output_images/readme_test_images_process0.png
+[readme_test_images_process1]: ./output_images/readme_test_images_process1.png
+[readme_test_images_process2]: ./output_images/readme_test_images_process2.png
+[readme_test_images_process3]: ./output_images/readme_test_images_process3.png
+[readme_test_images_process4]: ./output_images/readme_test_images_process4.png
+[readme_test_images_process5]: ./output_images/readme_test_images_process5.png
 
 [readme_videoprocess1]: ./output_images/readme_videoprocess1.png
 [readme_videoprocess2]: ./output_images/readme_videoprocess2.png
@@ -285,11 +286,12 @@ The pipeline for detection of cars is implemented in function `process()` in fil
 
 Ultimately I searched on three scales using YUV 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example images:
 
-![alt text][identified_boxes0]
-![alt text][identified_boxes1]
-![alt text][identified_boxes2]
-![alt text][identified_boxes3]
-![alt text][identified_boxes4]
+![alt text][readme_test_images_process0]
+![alt text][readme_test_images_process1]
+![alt text][readme_test_images_process2]
+![alt text][readme_test_images_process3]
+![alt text][readme_test_images_process4]
+![alt text][readme_test_images_process5]
 
 ---
 

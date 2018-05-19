@@ -99,7 +99,7 @@ class Pipeline:
         
         self.hotspots.add_bboxes(boxes)
         
-        draw_img, heatmap, boxed_image = self.hotspots.draw_labeled_bboxes_with_history_verbose(img)
+        draw_img, labels, heatmap, boxed_image = self.hotspots.draw_labeled_bboxes_with_history_verbose(img)
         
-        return draw_img, heatmap, boxed_image
+        return draw_img, labels, heatmap, boxed_image
 
