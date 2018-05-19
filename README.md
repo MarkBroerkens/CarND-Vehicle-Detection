@@ -72,7 +72,7 @@ My project includes the following files:
 
 ## Feature extraction from the training images
 
-The code for training the classifier is defined in function `train()` in file [train.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/train.py). This function is invoked with a list of files names of `vehicle` and `non-vehicle` images and several parameters that configure the feature extraction algorithms.
+The code for training the classifier is defined in function `train()` in file [train.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/train.py). This function is invoked with a list of file names of `vehicle` and `non-vehicle` images and several parameters that configure the feature extraction algorithms.
 Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
 
 ![alt text][image1]
@@ -83,7 +83,7 @@ In order to identify if the images that show a vehicle the following feature ext
 * Histogram of oriented gradients
 
 ## Histograms of Color
-The combinations of parameters and its impact on the test accuracy is claculated in test `test_01_train_histogram()` of [test_train.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/tests/test_train.py)
+The combinations of parameters and its impact on the test accuracy is calculated in test `test_01_train_histogram()` of [test_train.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/tests/test_train.py)
 
 | Number of features | Color space | Numer of bins | Test Accuracy |
 | -----------------------|---------------|------------------|------------------|
@@ -114,7 +114,7 @@ The combinations of parameters and its impact on the test accuracy is claculated
 
 
 ## Spatial Binning
-The combinations of parameters and its impact on the test accuracy is claculated in test `test_02_train_spatial` of [test_train.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/tests/test_train.py)
+The combinations of parameters and its impact on the test accuracy is calculated in test `test_02_train_spatial` of [test_train.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/tests/test_train.py)
 
 | Number of features | Color space | Spartial Size | Test Accuracy |
 | -----------------------|---------------|------------------|------------------|
@@ -147,7 +147,7 @@ The best results are marked in the table.
 
 
 ## Gradient Features
-Histograms of Ordered Gradients (HOG) were calculated in order to extract features with respect of the shape of the vehicle.
+Histograms of Ordered Gradients (HOG) were calculated in order to extract features that represent the shape of the vehicle.
 
 I explored different color spaces and different `skimage.hog()` parameters (`orientations`, `pixels_per_cell`, and `cells_per_block`).  
 Here are example using the `YUV` color space and HOG parameters of `orientations=13`, `pixels_per_cell=(16, 16)` and `cells_per_block=(2, 2)`:
@@ -167,7 +167,7 @@ Exemples of non vehicles
 ![alt text][imagenhog5]
 
 
-A linear `Support Vector Machine` classifier was trained wis feature vectors that were created by different `skimage.hog()` parameters in order to figure out which parameters work best on the given training data. The following table is calculated in `test_03_train_hog()` of [test_train.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/tests/test_train.py)
+A linear `Support Vector Machine` classifier was trained with feature vectors that were created by different `skimage.hog()` parameters in order to figure out which parameters work best on the given training data. The following table is calculated in `test_03_train_hog()` of [test_train.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/tests/test_train.py)
 
 | len features | color_space | orient | pix_per_cell | cell_per_block | hog_channel | accuracy | 
 | --------------|---------------|--------|---------------|------------------|----------------|------------|
@@ -254,11 +254,11 @@ The best results are marked in the table.
 
 I trained a linear SVM using the following test data that consists of 8792 vehicle images and 8968 non vehicles images
 
-[Test data of vehicles](https://s3.amazonaws.com/udacity-sdc/Vehicle_Tracking/vehicles.zip)
-[Test data of non-vehicles](https://s3.amazonaws.com/udacity-sdc/Vehicle_Tracking/non-vehicles.zip)
+* [Test data of vehicles](https://s3.amazonaws.com/udacity-sdc/Vehicle_Tracking/vehicles.zip)
+* [Test data of non-vehicles](https://s3.amazonaws.com/udacity-sdc/Vehicle_Tracking/non-vehicles.zip)
 
 The training of the classifier is implemented in function `train()` of [train.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/train.py):
-1. For each image the feature vector is calculated in method `extract_features()` in file 
+1. For each image the feature vector is calculated in method `extract_features()` in that is implemented in file [lesson_functions.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/lesson_functions.py):
 2. `sklearn.preprocessing.StandardScaler()`is used to normalize the feature vectors
 3. `sklearn.model_selection.train_test_split()` creates shuffled training and test data and labels
 4. the trained classifier is is saved via pickle so that it can be reused later (see [test_train.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/tests/test_train.py) )
@@ -285,9 +285,10 @@ The trained classifier is applied on sliding windows of different sizes. Small s
 The pipeline for detection of cars is implemented in function `process()` in file [car_finder_pipeline.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/car_finder_pipeline.py). It consists of the following steps:
 
 1. Search for vehicles using the aformentioned sliding windows approach (see the `find_cars()` that is implemented in [search_and_classify.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/search_and_classify.py) )
-2. f the classifier detects a car in the window, then the window is added to the set of `hot` boxes. 
+2. If the classifier detects a car in the window, then the window is added to the set of `hot` boxes. 
 3. These boxes are then combined in a heatmap that shows how many boxes overlap at each point in the image. 
-4. I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap (see [hotspots.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/hotspots.py)). I then assumed each blob corresponded to a vehicle.  I constructed bounding boxes to cover the area of each blob detected.  
+4. I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap (see [hotspots.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/hotspots.py)). 
+5. I then assumed each blob corresponded to a vehicle.  I constructed bounding boxes to cover the area of each blob detected.  
 
 Ultimately I searched on three scales using YUV 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example images of the results and the intermediate calculations:
 
@@ -304,7 +305,7 @@ Ultimately I searched on three scales using YUV 3-channel HOG features plus spat
 
 Here's a [link to my video result](./output_images/L_project_video.mp4)
 
-In order to reduce the false positives leverage I included detections of vehicles in previous frames (see [hotspots.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/hotspots.py), `draw_labeled_bboxes_with_history()`)
+In order to reduce the false positives I included detections of vehicles in previous frames (see [hotspots.py](https://github.com/MarkBroerkens/CarND-Vehicle-Detection/blob/master/hotspots.py), `draw_labeled_bboxes_with_history()`)
 
 Here's an example showing results and the intermediate work product of a sequence of frames in the project video.:
 
@@ -325,15 +326,15 @@ Here the resulting bounding boxes are drawn onto the last frame in the series:
 ---
 
 # Discussion
-While implementing this project I frequently ran into the situation where I tried to reuse a classifier that was trained using different feaure extraction strategies and parameters. By adding the parameters into the pickle files as well, I could increase my development speed.
+While implementing this project I frequently ran into the situation where I tried to reuse a classifier that was trained using different feaure extraction strategies and parameters. By adding the parameters into the pickle file, I was able to avoid this problem.
 
 The results of the vehicle detections improved significantly by improving the following aspects of the code:
 * improve accuracy of classifier
 * eleminiation of false positives by considering the hotspots of the last frames
 
-Since the classifier was trained on a quite small training set, the classifier might not work as well as in the provided data. We could improve the training set by:
+Since the classifier was trained on a quite small training set, the classifier might not work as well in other situations. We could improve the training set by:
 * augmentation of existing training data. 
-* extracting additional images from the given project video Note: we can especially focus on detected false positives which should be added to the set of non vehicles and locations where vehicles were not properly detected.
+* extracting additional images from the given project video. Note: we can especially focus on detected false positives which should be added to the set of non vehicles.
 
 For improved classification results we might be able to find a better feature extraction mechanism or we could use a CNN such as [YOLO](https://pjreddie.com/darknet/yolo/) ("You only look once"). Additionally, we could try to improve the parameters of the classifier using `sklearn.model_selection.GridSearchCV`.
 
