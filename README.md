@@ -338,3 +338,11 @@ Since the classifier was trained on a quite small training set, the classifier m
 
 For improved classification results we might be able to find a better feature extraction mechanism or we could use a CNN such as [YOLO](https://pjreddie.com/darknet/yolo/) ("You only look once"). Additionally, we could try to improve the parameters of the classifier using `sklearn.model_selection.GridSearchCV`.
 
+# Pro Tips
+* using IPython Tracer to debug. For example, the code below will activate the debugger:
+```python
+from IPython.core.debugger import Tracer
+Tracer()()
+```
+The Tracer()() object has to be placed where you’d like to inspect specific variables. 
+* If you wish to master the art of writing clean code in Python, you may want to check out the [Google Python Style Guide](https://google.github.io/styleguide/pyguide.html).
